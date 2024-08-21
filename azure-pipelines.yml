@@ -38,6 +38,13 @@ stages:
         PathtoPublish: $(Build.ArtifactStagingDirectory)
         ArtifactName: drop
         publishLocation: Container
+    - task: AzureCLI@2
+      inputs:
+        azureSubscription: Microsoft Azure Internal Consumption(fbb69af7-f9a0-4e69-ba10-b4eb445e3963)
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          az login --service-principal -u $(servicePrincipalId) -p $(servicePrincipalKey) --tenant $(tenantId)
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: AzureRM
